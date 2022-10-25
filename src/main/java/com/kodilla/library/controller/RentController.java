@@ -11,21 +11,21 @@ import org.springframework.web.bind.annotation.*;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping(value = "/v1/library", consumes = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/v1/library/rents", consumes = MediaType.APPLICATION_JSON_VALUE)
 public class RentController {
 
     private final RentMapper rentMapper;
 
     private final RentDbService rentDbService;
 
-    @PostMapping("/rent")
+    @PostMapping()
     public ResponseEntity<Object> rentBook(@RequestBody RentDto rentDto) throws BookNotAvailableException{
         Rent rent = rentMapper.mapToRent(rentDto);
         rentDbService.rentBook(rent);
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/return")
+    @DeleteMapping()
     public ResponseEntity<Object> returnBook(@RequestBody RentDto rentDto) {
         Rent rent = rentMapper.mapToRent(rentDto);
         rentDbService.returnBook(rent);

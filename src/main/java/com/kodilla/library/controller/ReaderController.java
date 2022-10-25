@@ -8,24 +8,33 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(value = "/v1/library", consumes = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/v1/library/readers", consumes = MediaType.APPLICATION_JSON_VALUE)
 public class ReaderController {
 
     private final ReaderDbService readerDbService;
     private final ReaderMapper readerMapper;
 
-    @PostMapping(value = "/reader")
+    @GetMapping
+    public ResponseEntity<List<ReaderDto>> getReaders() {
+        List<Reader> readers = readerDbService.getAllReaders();
+        return ResponseEntity.ok(readerMapper.mapToReaderDtoList(readers));
+    }
+
+    @PostMapping()
     public ResponseEntity<Object> addReader(@RequestBody ReaderDto readerDto) {
         Reader reader = readerMapper.mapToReader(readerDto);
         readerDbService.saveReader(reader);
         return ResponseEntity.ok().build();
     }
 
-
-
-
-
+    @DeleteMapping(value = "{readerId}")
+    public ResponseEntity<Void> deleteReader(@PathVariable Integer readerId) {
+        readerDbService.deleteReader(readerId);
+        return ResponseEntity.ok().build();
+    }
 
 }

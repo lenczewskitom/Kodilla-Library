@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping(value = "/v1/library", consumes = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/v1/library/books", consumes = MediaType.APPLICATION_JSON_VALUE)
 public class BookController {
 
     private final BookMapper bookMapper;
     private final BookDbService bookDbService;
 
-    @PostMapping("/book")
-    public ResponseEntity<Object> addBook(@RequestBody BookDto bookDto) {
+    @PostMapping()
+    public ResponseEntity<Object> addBook(@RequestBody BookDto bookDto) throws TitleNotFoundException {
         Book book = bookMapper.mapToBook(bookDto);
         bookDbService.saveBook(book);
         return ResponseEntity.ok().build();

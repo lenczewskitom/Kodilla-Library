@@ -1,17 +1,22 @@
 package com.kodilla.library.mapper;
 
+import com.kodilla.library.controller.TitleNotFoundException;
 import com.kodilla.library.domain.Book;
 import com.kodilla.library.domain.BookDto;
+import com.kodilla.library.service.TitleDbService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class BookMapper {
 
-    public Book mapToBook(final BookDto bookDto) {
+    private final TitleDbService titleDbService;
+
+    public Book mapToBook(final BookDto bookDto) throws TitleNotFoundException {
         return new Book(
-                bookDto.getId(),
-                bookDto.getTitleId(),
-                bookDto.getStatus()
+                bookDto.getStatus(),
+                titleDbService.getTitle(bookDto.getId())
         );
     }
 }
