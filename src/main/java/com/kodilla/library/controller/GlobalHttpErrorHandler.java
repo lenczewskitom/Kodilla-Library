@@ -18,4 +18,9 @@ public class GlobalHttpErrorHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleBookNotAvailableException(BookNotAvailableException exception) {
         return new ResponseEntity<>("Given book is not available now", HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(BookNotFoundException.class)
+    public ResponseEntity<Object> handleBookNotFoundException(BookNotFoundException exception) {
+        return new ResponseEntity<>("Book with given name doesn't exists in our library", HttpStatus.BAD_REQUEST);
+    }
 }

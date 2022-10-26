@@ -8,10 +8,9 @@ import org.springframework.stereotype.Service;
 public class RentMapper {
     public Rent mapToRent(final RentDto rentDto) {
         return new Rent(
-                rentDto.getBookId(),
-                rentDto.getReaderId(),
                 rentDto.getRentDate(),
-                rentDto.getReturnDate()
-        );
+                rentDto.getReturnDate(),
+
+        )
     }
 }

@@ -7,6 +7,9 @@ import com.kodilla.library.service.TitleDbService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class BookMapper {
@@ -18,5 +21,19 @@ public class BookMapper {
                 bookDto.getStatus(),
                 titleDbService.getTitle(bookDto.getId())
         );
+    }
+
+    public BookDto mapToBookDto(final Book book) {
+        return new BookDto(
+                book.getId(),
+                book.getStatus(),
+                book.getTitle().getId()
+        );
+    }
+
+    public List<BookDto> mapToBookDtoList(final List<Book> bookList) {
+        return bookList.stream()
+                .map(this::mapToBookDto)
+                .collect(Collectors.toList());
     }
 }

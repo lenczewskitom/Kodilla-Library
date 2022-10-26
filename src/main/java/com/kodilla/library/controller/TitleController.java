@@ -43,4 +43,9 @@ public class TitleController {
         titleDbService.deleteTitle(id);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping(value = "getAvailableBooks/{title}")
+    public ResponseEntity<Integer> getAvailableBooks(@PathVariable String title) {
+        return ResponseEntity.ok(titleDbService.getAvailableBooks(title));
+    }
 }
