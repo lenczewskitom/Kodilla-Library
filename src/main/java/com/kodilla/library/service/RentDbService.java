@@ -1,8 +1,8 @@
 package com.kodilla.library.service;
 
+import com.kodilla.library.controller.BookNotAvailableException;
 import com.kodilla.library.controller.BookNotFoundException;
 import com.kodilla.library.controller.RentNotFoundException;
-import com.kodilla.library.domain.Book;
 import com.kodilla.library.domain.Rent;
 import com.kodilla.library.repository.RentRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,15 +18,22 @@ public class RentDbService {
 
     @Autowired
     private final RentRepository rentRepository;
+    @Autowired
     private final BookDbService bookDbService;
+
+    @Autowired
+    private final TitleDbService titleDbService;
 
     public List<Rent> getRents() {return rentRepository.findAll(); }
 
-    public void rentBook(final Rent rent) throws BookNotFoundException {
+    public void rentBook(final Rent rent) throws BookNotFoundException, BookNotAvailableException {
 
-        bookDbService.changeStatus(rent.getBook().getId(), "Rented");
+        if (titleDbService.getAvailableBooks(rent.getBook().getTitle().getTitle()) > 0) {
+            bookDbService.changeStatus(rent.getBook().getId(), "Rented");
 
-        rentRepository.save(rent);
+            rentRepository.save(rent);
+        } else throw new BookNotAvailableException();
+
     }
 
     public Rent returnBook(final Rent rent) throws RentNotFoundException, BookNotFoundException {
