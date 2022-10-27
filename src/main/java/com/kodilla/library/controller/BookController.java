@@ -44,10 +44,9 @@ public class BookController {
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping
-    public ResponseEntity<BookDto> changeStatus(@RequestBody BookDto bookDto) throws TitleNotFoundException, BookNotFoundException {
-        Book book = bookMapper.mapToBook(bookDto);
-        Book updatedBook = bookDbService.changeStatus(book);
+    @PutMapping(value = "{bookId}/{status}")
+    public ResponseEntity<BookDto> changeStatus(@PathVariable Integer bookId, @PathVariable String status) throws TitleNotFoundException, BookNotFoundException {
+        Book updatedBook = bookDbService.changeStatus(bookId, status);
         return ResponseEntity.ok(bookMapper.mapToBookDto(updatedBook));
     }
 }

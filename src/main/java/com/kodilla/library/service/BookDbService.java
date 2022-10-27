@@ -28,10 +28,10 @@ public class BookDbService {
 
     public void deleteBook(final Integer id) { bookRepository.deleteById(id);}
 
-    public Book changeStatus(Book book) throws BookNotFoundException {
+    public Book changeStatus(final Integer id, String status) throws BookNotFoundException {
 
-        Book bookToUpdate = bookRepository.findById(book.getId()).orElseThrow(BookNotFoundException::new);
-        bookToUpdate.setStatus(book.getStatus());
+        Book bookToUpdate = bookRepository.findById(id).orElseThrow(BookNotFoundException::new);
+        bookToUpdate.setStatus(status);
         saveBook(bookToUpdate);
         return bookToUpdate;
     }

@@ -38,6 +38,7 @@ public class TitleDbService {
     public Integer getAvailableBooks(final String title) {
         List<Book> books = bookRepository.findAll().stream()
                 .filter(book -> book.getTitle().equals(title))
+                .filter(book -> book.getStatus().equals("Available"))
                 .collect(Collectors.toList());
         return books.size();
     }

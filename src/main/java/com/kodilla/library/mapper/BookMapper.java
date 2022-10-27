@@ -19,7 +19,7 @@ public class BookMapper {
     public Book mapToBook(final BookDto bookDto) throws TitleNotFoundException {
         return new Book(
                 bookDto.getStatus(),
-                titleDbService.getTitle(bookDto.getId())
+                titleDbService.getTitle(bookDto.getTitleId())
         );
     }
 

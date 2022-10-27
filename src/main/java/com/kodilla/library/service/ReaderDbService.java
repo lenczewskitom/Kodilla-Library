@@ -1,5 +1,6 @@
 package com.kodilla.library.service;
 
+import com.kodilla.library.controller.ReaderNotFoundException;
 import com.kodilla.library.domain.Reader;
 import com.kodilla.library.repository.ReaderRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,10 @@ public class ReaderDbService {
     }
 
     public List<Reader> getAllReaders() { return readerRepository.findAll(); }
+
+    public Reader getReader(final Integer id) throws ReaderNotFoundException {
+        return readerRepository.findById(id).orElseThrow(ReaderNotFoundException::new);
+    }
 
     public void deleteReader(final Integer id) { readerRepository.deleteById(id); }
 }
