@@ -12,7 +12,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(value = "/v1/library/readers", consumes = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/v1/library/readers")
 public class ReaderController {
 
     private final ReaderDbService readerDbService;
@@ -24,7 +24,7 @@ public class ReaderController {
         return ResponseEntity.ok(readerMapper.mapToReaderDtoList(readers));
     }
 
-    @PostMapping()
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> addReader(@RequestBody ReaderDto readerDto) {
         Reader reader = readerMapper.mapToReader(readerDto);
         readerDbService.saveReader(reader);

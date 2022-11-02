@@ -38,7 +38,7 @@ public class Reader {
 
     @OneToMany(
             targetEntity = Rent.class,
-            mappedBy = "rent",
+            mappedBy = "reader",
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY
     )

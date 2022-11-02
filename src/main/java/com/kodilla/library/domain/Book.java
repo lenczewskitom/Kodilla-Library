@@ -16,6 +16,7 @@ public class Book {
     public Book(String status, Title title) {
         this.status = status;
         this.title = title;
+        this.bookTitle = title.getTitle();
     }
 
     @Id
@@ -30,4 +31,7 @@ public class Book {
     @ManyToOne
     @JoinColumn(name = "TITLE_ID")
     private Title title;
+
+    @Column(name = "TITLE")
+    private String bookTitle;
 }

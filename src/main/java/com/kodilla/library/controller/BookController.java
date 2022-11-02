@@ -14,7 +14,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping(value = "/v1/library/books", consumes = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/v1/library/books")
 public class BookController {
 
     private final BookMapper bookMapper;
@@ -31,7 +31,7 @@ public class BookController {
         return new ResponseEntity<>(bookMapper.mapToBookDto(bookDbService.getBook(bookId)), HttpStatus.OK);
     }
 
-    @PostMapping()
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> addBook(@RequestBody BookDto bookDto) throws TitleNotFoundException {
         Book book = bookMapper.mapToBook(bookDto);
         bookDbService.saveBook(book);

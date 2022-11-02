@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -33,16 +34,15 @@ public class RentDbService {
 
             rentRepository.save(rent);
         } else throw new BookNotAvailableException();
-
     }
 
-    public Rent returnBook(final Rent rent) throws RentNotFoundException, BookNotFoundException {
+    public Rent returnBook(final Integer rentId, Date returnDate) throws RentNotFoundException, BookNotFoundException {
 
-        Rent returned = rentRepository.findById(rent.getRentId()).orElseThrow(RentNotFoundException::new);
-        returned.setReturnDate(rent.getReturnDate());
+        Rent returned = rentRepository.findById(rentId).orElseThrow(RentNotFoundException::new);
+        returned.setReturnDate(returnDate);
         rentRepository.save(returned);
 
-        bookDbService.changeStatus(rent.getBook().getId(), "Available");
+        bookDbService.changeStatus(returned.getBook().getId(), "Available");
 
         return returned;
     }

@@ -14,7 +14,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(value = "/v1/library/titles", consumes = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/v1/library/titles")
 public class TitleController {
 
     private final TitleDbService titleDbService;
@@ -31,7 +31,7 @@ public class TitleController {
         return new ResponseEntity<>(titleMapper.mapToTitleDto(titleDbService.getTitle(titleId)), HttpStatus.OK);
     }
 
-    @PostMapping()
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> addTitle(@RequestBody TitleDto titleDto) {
         Title title = titleMapper.mapToTitle(titleDto);
         titleDbService.saveTitle(title);
